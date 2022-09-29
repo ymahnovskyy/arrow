@@ -1276,6 +1276,41 @@ class TestArrowSpanRange:
             (arrow.Arrow(2013, 2, 25), arrow.Arrow(2013, 3, 3, 23, 59, 59, 999999)),
         ]
 
+        # span week from Friday to Thursday
+        result = list(
+            arrow.Arrow.span_range("week", datetime(2013, 2, 2), datetime(2013, 2, 28), week_start=5)
+        )
+        assert result == [
+            (arrow.Arrow(2013, 2, 1), arrow.Arrow(2013, 2, 7, 23, 59, 59, 999999)),
+            (arrow.Arrow(2013, 2, 8), arrow.Arrow(2013, 2, 14, 23, 59, 59, 999999)),
+            (
+                arrow.Arrow(2013, 2, 15),
+                arrow.Arrow(2013, 2, 21, 23, 59, 59, 999999),
+            ),
+            (
+                arrow.Arrow(2013, 2, 22),
+                arrow.Arrow(2013, 2, 28, 23, 59, 59, 999999),
+            ),
+        ]
+        # span week from Sunday to Saturday
+        result = list(
+            arrow.Arrow.span_range("week", datetime(2013, 2, 2), datetime(2013, 2, 28), week_start=7)
+        )
+
+        assert result == [
+            (arrow.Arrow(2013, 1, 27), arrow.Arrow(2013, 2, 2, 23, 59, 59, 999999)),
+            (arrow.Arrow(2013, 2, 3), arrow.Arrow(2013, 2, 9, 23, 59, 59, 999999)),
+            (arrow.Arrow(2013, 2, 10), arrow.Arrow(2013, 2, 16, 23, 59, 59, 999999)),
+            (
+                arrow.Arrow(2013, 2, 17),
+                arrow.Arrow(2013, 2, 23, 23, 59, 59, 999999),
+            ),
+            (
+                arrow.Arrow(2013, 2, 24),
+                arrow.Arrow(2013, 3, 2, 23, 59, 59, 999999),
+            ),
+        ]
+
     def test_day(self):
 
         result = list(
